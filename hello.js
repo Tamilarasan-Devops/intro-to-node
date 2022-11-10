@@ -4,4 +4,4 @@ http.createServer(function (req, res) {
     res.end("<h1>Hello world! This is my first nodejs code</h1>");
 }).listen(8000);
 
-console.log("Server Listening on Port 8080...");
+console.log("Server Listening on Port 8000...");

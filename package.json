@@ -4,6 +4,7 @@
   "description": "Simple Web App",
   "main": "file3.js",
   "scripts": {
+    "start": "node file3.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
