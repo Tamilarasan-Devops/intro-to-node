@@ -1,0 +1,19 @@
+{
+  "name": "nodepackage1",
+  "version": "12.21.0",
+  "description": "Simple Web App",
+  "main": "file3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tamilarasan-Devops/intro-to-node.git"
+  },
+  "author": "Tamil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tamilarasan-Devops/intro-to-node/issues"
+  },
+  "homepage": "https://github.com/Tamilarasan-Devops/intro-to-node#readme"
+}
