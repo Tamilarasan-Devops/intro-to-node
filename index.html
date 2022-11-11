@@ -6,59 +6,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us</title>
     <style>
-      body {
-        background: linear-gradient(coral, pink);
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: rgb(90, 90, 90);
       }
-      p {
-        background-color: powderblue;
-        font-style: italic;
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        padding: 8px;
+        color: antiquewhite;
+      }
+
+      #head {
+        color: wheat;
+        background-color: rgb(90, 90, 90);
+        text-align: center;
+        font-size: 50px;
+        border: 3px solid;
+      }
+
+      .timerBtn {
+        background-color: rgb(60, 60, 60);
+        color: white;
+        font-size: consolas, monospace;
+        border-radius: 12px;
+        border: 3px solid;
+        width: 80px;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      #timeDisplay {
+        font-size: 75px;
+        color: rgb(14, 206, 46);
+        font-size: consolas, monospace;
+      }
+
+      #timerContainer {
+        text-align: center;
+        border: 3px solid;
+        border-radius: 25px;
+        background-color: #222222;
       }
     </style>
   </head>
   <body>
-    <div class="topnav">
-      <a class="active" href="/">Home</a>
-      <a href="/first_page">First Page</a>
-      <a href="/second_page">Second Page</a>
-      <a href="/third_page">Third Page</a>
+    <ul>
+      <li><a class="active" href="/">Home</a></li>
+      <li><a href="/news">News</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+    <br /><br />
+    <div id="head">
+      <p>Stop Watch</p>
     </div>
-    <h1>Hello!</h1>
-    <p>How are you?</p>
-    <p>Do you want to know who i'm?</p>
-    <button id="whobutton">who i'm?</button>
-    <p id="whotext"></p>
-    <p>Do you want to know who you are?</p>
-    <button id="youbutton">who you are?</button>
-    <p id="whoyou"></p>
-    <p>Do you want to know who we have?</p>
-    <button id="webutton">who we have?</button>
-    <p id="whowe"></p>
-    <p>Type what you think about now and click the button below</p>
-    <label for="inputtext1">What do you think now?</label>
-    <input id="inputtext1" type="text" />
-    <button id="myBtn1">click me</button>
-    <p id="text1"></p>
+    <br /><br />
+    <div id="timerContainer">
+      <div id="timeDisplay">00:00:00</div>
+      <button id="startBtn" class="timerBtn">Start</button>
+      <button id="pauseBtn" class="timerBtn">Pause</button>
+      <button id="resetBtn" class="timerBtn">Reset</button>
+    </div>
     <script>
-      document.getElementById("whobutton").onclick = function who() {
-        document.getElementById("whotext").innerHTML =
-          "It is your King...." + "<br></br>" + "Tamilarasan Meganathan";
-      };
+      const timeDisplay = document.querySelector("#timeDisplay");
 
-      document.getElementById("youbutton").onclick = function you() {
-        document.getElementById("whoyou").innerHTML =
-          "It is my Queen...." + "<br></br>" + "Yurekha Viswanathan";
-      };
+      const startBtn = document.querySelector("#startBtn");
+      const pauseBtn = document.querySelector("#pauseBtn");
+      const resetBtn = document.querySelector("#resetBtn");
 
-      document.getElementById("webutton").onclick = function we() {
-        document.getElementById("whowe").innerHTML =
-          "It is our princess...." + "<br></br>" + "Samhita Tamilarasan";
-      };
+      let startTime = 0;
+      let elapsedTime = 0;
+      let currentTime = 0;
+      let paused = true;
+      let intervalId;
+      let hrs = 0;
+      let mins = 0;
+      let secs = 0;
 
-      document.getElementById("myBtn1").onclick = function mydisplay() {
-        const textvalue = document.getElementById("inputtext1").value;
-        document.getElementById("text1").innerHTML =
-          "I know what you thought...." + "<br></br>" + textvalue;
-      };
+      startBtn.addEventListener("click", () => {
+        if (paused) {
+          paused = false;
+          startTime = Date.now() - elapsedTime;
+          intervalId = setInterval(updateTime, 75);
+        }
+      });
+      pauseBtn.addEventListener("click", () => {
+        if (!paused) {
+          paused = true;
+          elapsedTime = Date.now() - startTime;
+          clearInterval(intervalId);
+        }
+      });
+      resetBtn.addEventListener("click", () => {
+        paused = true;
+        clearInterval(intervalId);
+        startTime = 0;
+        elapsedTime = 0;
+        currentTime = 0;
+        hrs = 0;
+        mins = 0;
+        secs = 0;
+        timeDisplay.textContent = "00:00:00";
+      });
+
+      function updateTime() {
+        elapsedTime = Date.now() - startTime;
+
+        secs = Math.floor((elapsedTime / 1000) % 60);
+        mins = Math.floor((elapsedTime / (1000 * 60)) % 60);
+        hrs = Math.floor((elapsedTime / (1000 * 60 * 60)) % 60);
+
+        secs = padd(secs);
+        mins = padd(mins);
+        hrs = padd(hrs);
+
+        function padd(unit) {
+          return ("0" + unit).length > 2 ? unit : "0" + unit;
+        }
+
+        timeDisplay.textContent = `${hrs}:${mins}:${secs}`;
+      }
     </script>
   </body>
 </html>
